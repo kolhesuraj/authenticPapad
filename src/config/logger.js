@@ -16,10 +16,8 @@ const logger = winston.createLogger({
 		winston.format.printf(({ level, message }) => `${level}: ${message}`)
 	),
 	transports: [
-		new winston.transports.Console({
-			stderrLevels: ['error'],
-		}),
-	],
+		new winston.transports.Console({ stderrLevels: ['error'] })
+	]
 });
 
 module.exports = logger;

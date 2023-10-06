@@ -14,20 +14,16 @@ module.exports = {
 		url: envVars.MONGODB_URL,
 		options: {
 			useNewUrlParser: true,
-			useUnifiedTopology: true,
-		},
+			useUnifiedTopology: true
+		}
 	},
 	jwt: {
 		secret: envVars.JWT_SECRET,
-		accessExpirationMinutes: envVars.JWT_ACCESS_EXPIRATION_MINUTES,
+		accessExpirationMinutes: envVars.JWT_ACCESS_EXPIRATION_MINUTES
 	},
 	socialLogin: {
-		google: {
-			clientId: envVars.GOOGLE_CLIENT_ID
-		},
-		facebook: {
-			clientId: envVars.FACEBOOK_APP_ID
-		}
+		google: { clientId: envVars.GOOGLE_CLIENT_ID },
+		facebook: { clientId: envVars.FACEBOOK_APP_ID }
 	},
 	email: {
 		provider: envVars.EMAIL_PROVIDER, // sendgrid, aws, nodemailer
@@ -37,15 +33,15 @@ module.exports = {
 			port: envVars.SMTP_PORT,
 			auth: {
 				user: envVars.SMTP_USERNAME,
-				pass: envVars.SMTP_PASSWORD,
+				pass: envVars.SMTP_PASSWORD
 			}
 		},
-		from: envVars.EMAIL_FROM,
+		from: envVars.EMAIL_FROM
 	},
 	aws: {
 		s3BucketName: envVars.AWS_S3_BUCKET,
 		awsRegion: envVars.AWS_S3_REGION,
 		secretAccessKey: envVars.AWS_S3_ACCESS_KEY_ID,
-		accessKeyId: envVars.AWS_S3_SECRET_ACCESS_KEY,
+		accessKeyId: envVars.AWS_S3_SECRET_ACCESS_KEY
 	}
 };

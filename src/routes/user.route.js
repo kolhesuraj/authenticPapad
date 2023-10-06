@@ -9,17 +9,10 @@ const router = express.Router();
 // Token authentication for all routes defined in this file
 router.use(auth.auth);
 
-
 // Routes: get one user, update user
-router
-    .route('/')
-    .get(userController.getUser)
-    .patch(validate(userValidation.updateUser), userController.updateUser);
+router.route('/').get(userController.getUser).patch(validate(userValidation.updateUser), userController.updateUser);
 
 // Routes: update password
-router
-    .route("/update-password")
-    .put(validate(userValidation.updatePassword), userController.updatePassword);
-
+router.route('/update-password').put(validate(userValidation.updatePassword), userController.updatePassword);
 
 module.exports = router;

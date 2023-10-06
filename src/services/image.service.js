@@ -1,8 +1,8 @@
 const fs = require('fs');
 const path = require('path');
-const httpStatus = require("http-status");
-const { Image } = require("../models");
-const ApiError = require("../utils/ApiError");
+const httpStatus = require('http-status');
+const { Image } = require('../models');
+const ApiError = require('../utils/ApiError');
 
 /**
  * Create a new image.
@@ -10,11 +10,11 @@ const ApiError = require("../utils/ApiError");
  * @returns {Promise<Image>} - The created image.
  */
 const createImage = (image) => {
-    const imageBody = {
-        filename: image.filename,
-        path: image.path
-    };
-    return Image.create(imageBody);
+	const imageBody = {
+		filename: image.filename,
+		path: image.path
+	};
+	return Image.create(imageBody);
 };
 
 /**
@@ -22,23 +22,22 @@ const createImage = (image) => {
  * @param {Object} imageBody - The images to create.
  * @returns {Promise<Image>} - The created images.
  */
-const saveImages = (images) => {
-    return Image.insertMany(images);
-};
+const saveImages = (images) => Image.insertMany(images);
 
 const saveMultipleImages = async (images) => {
-    let imageBody = [];
-    images.forEach(image => {
-        imageBody.push({
-            filename: image.filename,
-            path: image.path
-        });
-    });
-    const result = await saveImages(imageBody);
-    // Extract the inserted IDs from the inserted documents
-    const insertedIds = result.map(doc => doc._id);
+	const imageBody = [];
+	images.forEach((image) => {
+		imageBody.push({
+			filename: image.filename,
+			path: image.path
+		});
+	});
+	const result = await saveImages(imageBody);
 
-    return insertedIds;
+	// Extract the inserted IDs from the inserted documents
+	const insertedIds = result.map((doc) => doc._id);
+
+	return insertedIds;
 };
 
 /**
@@ -46,9 +45,7 @@ const saveMultipleImages = async (images) => {
  * @param {ObjectId} id - The ID of the image to find.
  * @returns {Promise<Image>} - The found image.
  */
-const getImageById = async (id) => {
-    return Image.findById(id);
-};
+const getImageById = (id) => Image.findById(id);
 
 /**
  * Delete an image by ID.
@@ -57,31 +54,31 @@ const getImageById = async (id) => {
  * @throws {ApiError} - If the image is not found.
  */
 const deleteImageById = async (imageId) => {
-    const image = await getImageById(imageId);
-    if (!image) {
-        throw new ApiError(httpStatus.BAD_REQUEST, "image not found");
-    }
-    await image.delete();
-    return image;
+	const image = await getImageById(imageId);
+	if (!image) {
+		throw new ApiError(httpStatus.BAD_REQUEST, 'image not found');
+	}
+	await image.delete();
+	return image;
 };
-
 
 /**
  * Reads and returns the contents of an image file.
  * @param filename - The filename parameter name of the file.
- * @returns 
+ * @returns
  */
 const readImage = (filename) => {
-    const imagePath = path.join(__dirname, "./../../uploads/", filename);
-    return fs.readFileSync(imagePath);
+	const imagePath = path.join(__dirname, './../../uploads/', filename);
+	// eslint-disable-next-line security/detect-non-literal-fs-filename
+	return fs.readFileSync(imagePath);
 };
 
 
 
 module.exports = {
-    readImage,
-    createImage,
-    getImageById,
-    deleteImageById,
-    saveMultipleImages
+	readImage,
+	createImage,
+	getImageById,
+	deleteImageById,
+	saveMultipleImages
 };

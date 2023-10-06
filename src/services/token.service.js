@@ -2,7 +2,6 @@ const jwt = require('jsonwebtoken');
 const moment = require('moment');
 const config = require('../config/environment');
 
-
 /**
  * Generate token
  * @param {ObjectId} userId
@@ -12,14 +11,13 @@ const config = require('../config/environment');
  * @returns {string}
  */
 const generateToken = (userId, expires, secret = config.jwt.secret) => {
-    const payload = {
-        sub: userId,
-        iat: moment().unix(),
-        exp: expires.unix(),
-    };
-    return jwt.sign(payload, secret);
+	const payload = {
+		sub: userId,
+		iat: moment().unix(),
+		exp: expires.unix()
+	};
+	return jwt.sign(payload, secret);
 };
-
 
 /**
  * Verify token and return token doc (or throw an error if it is not valid)
@@ -27,29 +25,27 @@ const generateToken = (userId, expires, secret = config.jwt.secret) => {
  * @param {string} type
  * @returns {Promise<Token>}
  */
-const verifyToken = async (token, secret = config.jwt.secret) => {
-    return jwt.verify(token, secret);
-};
+const verifyToken = (token, secret = config.jwt.secret) => jwt.verify(token, secret);
 
 /**
  * Generate auth tokens
  * @param {User} user
  * @returns {Promise<Object>}
  */
-const generateAuthTokens = async (user) => {
-    const accessTokenExpires = moment().add(config.jwt.accessExpirationMinutes, 'minutes');
-    const accessToken = generateToken(user.id, accessTokenExpires);
+const generateAuthTokens = (user) => {
+	const accessTokenExpires = moment().add(config.jwt.accessExpirationMinutes, 'minutes');
+	const accessToken = generateToken(user.id, accessTokenExpires);
 
-    return {
-        token: accessToken,
-        expires: accessTokenExpires.toDate()
-    };
+	return {
+		token: accessToken,
+		expires: accessTokenExpires.toDate()
+	};
 };
 
 
 
 module.exports = {
-    generateToken,
-    verifyToken,
-    generateAuthTokens
+	generateToken,
+	verifyToken,
+	generateAuthTokens
 };

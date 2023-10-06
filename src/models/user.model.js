@@ -1,39 +1,39 @@
-const mongoose = require("mongoose");
+/* eslint-disable func-names */
+/* eslint-disable require-await */
+const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
-const validator = require("validator");
-const { private } = require("./plugins");
+const validator = require('validator');
+const { privates } = require('./plugins');
 
 
 const userSchema = mongoose.Schema(
-    {
-        name: {
-            type: String,
-            required: true,
-            trim: true,
-        },
-        email: {
-            type: String,
-            trim: true,
-            lowercase: true,
-            validate(value) {
-                if (!validator.isEmail(value)) {
-                    throw new Error("Invalid email");
-                }
-            },
-        },
-        mobile: {
-            type: Number,
-            require: true
-        },
-        password: {
-            type: String,
-            require: true,
-            private: true,
-        }
-    },
-    {
-        timestamps: true,
-    }
+	{
+		name: {
+			type: String,
+			required: true,
+			trim: true
+		},
+		email: {
+			type: String,
+			trim: true,
+			lowercase: true,
+			validate(value) {
+				if (!validator.isEmail(value)) {
+					throw new Error('Invalid email');
+				}
+			}
+		},
+		mobile: {
+			type: Number,
+			require: true
+		},
+		password: {
+			type: String,
+			require: true,
+			private: true
+		}
+	},
+	{ timestamps: true }
 );
 
 
@@ -43,20 +43,20 @@ const userSchema = mongoose.Schema(
  * @returns {Promise<boolean>}
  */
 userSchema.methods.isPasswordMatch = async function (password) {
-    const user = this;
-    return bcrypt.compare(password, user.password);
+	const user = this;
+	return bcrypt.compare(password, user.password);
 };
 
 userSchema.pre('save', async function (next) {
-    const user = this;
-    if (user.isModified('password')) {
-        user.password = await bcrypt.hash(user.password, 8);
-    }
-    next();
+	const user = this;
+	if (user.isModified('password')) {
+		user.password = await bcrypt.hash(user.password, 8);
+	}
+	next();
 });
 
 // apply plugins for schema
-userSchema.plugin(private);
+userSchema.plugin(privates);
 
 /**
  * @typedef User

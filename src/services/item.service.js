@@ -1,15 +1,13 @@
-const httpStatus = require("http-status");
-const { Item } = require("../models");
-const ApiError = require("../utils/ApiError");
+const httpStatus = require('http-status');
+const { Item } = require('../models');
+const ApiError = require('../utils/ApiError');
 
 /**
  * Create a new item.
  * @param {Object} itemBody - The item to create.
  * @returns {Promise<Item>} - The created item.
  */
-const createItem = (itemBody) => {
-    return Item.create(itemBody);
-};
+const createItem = (itemBody) => Item.create(itemBody);
 
 /**
  * Query for items in the database.
@@ -21,8 +19,8 @@ const createItem = (itemBody) => {
  * @returns {Promise<QueryResult<Item>>} - The paginated results of the query.
  */
 const queryItems = async (filter, options) => {
-    const items = await Item.paginate(filter, options);
-    return items;
+	const items = await Item.paginate(filter, options);
+	return items;
 };
 
 /**
@@ -30,9 +28,7 @@ const queryItems = async (filter, options) => {
  * @param {ObjectId} id - The ID of the item to find.
  * @returns {Promise<Item>} - The found item.
  */
-const getItemById = (id) => {
-    return Item.findById(id);
-};
+const getItemById = (id) => Item.findById(id);
 
 /**
  * Update an item by ID.
@@ -42,13 +38,13 @@ const getItemById = (id) => {
  * @throws {ApiError} - If the item is not found.
  */
 const updateItemById = async (itemId, updateBody) => {
-    const item = await getItemById(itemId);
-    if (!item) {
-        throw new ApiError(httpStatus.BAD_REQUEST, "item not found");
-    }
-    Object.assign(item, updateBody);
-    await item.save();
-    return item;
+	const item = await getItemById(itemId);
+	if (!item) {
+		throw new ApiError(httpStatus.BAD_REQUEST, 'item not found');
+	}
+	Object.assign(item, updateBody);
+	await item.save();
+	return item;
 };
 
 /**
@@ -58,18 +54,18 @@ const updateItemById = async (itemId, updateBody) => {
  * @throws {ApiError} - If the item is not found.
  */
 const deleteItemById = async (itemId) => {
-    const item = await getItemById(itemId);
-    if (!item) {
-        throw new ApiError(httpStatus.BAD_REQUEST, "item not found");
-    }
-    await item.delete();
-    return item;
+	const item = await getItemById(itemId);
+	if (!item) {
+		throw new ApiError(httpStatus.BAD_REQUEST, 'item not found');
+	}
+	await item.delete();
+	return item;
 };
 
 module.exports = {
-    createItem,
-    queryItems,
-    getItemById,
-    updateItemById,
-    deleteItemById,
+	createItem,
+	queryItems,
+	getItemById,
+	updateItemById,
+	deleteItemById
 };

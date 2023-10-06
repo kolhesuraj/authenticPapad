@@ -1,2 +1,2 @@
-module.exports.paginate = require("./pagination");
-module.exports.private = require("./private");
+module.exports.paginate = require('./pagination');
+module.exports.privates = require('./private');
