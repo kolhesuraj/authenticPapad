@@ -14,10 +14,11 @@ mongoose.set("strictQuery", true);
 
 // Connect to MongoDB using mongoose
 mongoose.connect(config.mongoose.url, config.mongoose.options).then((db) => {
-	console.log('\x1b[36m%s\x1b[0m', "------------------------------------------------------");
+	console.log('\x1b[36m%s\x1b[1m', "------------------------------------------------------");
 	console.log('\x1b[36m%s\x1b[0m', `info: Connected to MongoDB => ${config.mongoose.url}`);
 	server = app.listen(config.port, () => {
-		console.log('\x1b[36m%s\x1b[0m', `info: Node server listening on port => ${config.port}`);
+		console.log('\x1b[36m%s\x1b[0m', "------------------------------------------------------");
+		console.log('\x1b[32m%s\x1b[0m', `info: Node server listening on port => ${config.port}`);
 		console.log('\x1b[36m%s\x1b[0m', "------------------------------------------------------");
 	});
 });

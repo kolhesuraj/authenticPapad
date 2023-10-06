@@ -3,6 +3,7 @@ const helmet = require('helmet');
 const compression = require('compression');
 const cors = require('cors');
 const httpStatus = require('http-status');
+const path = require('path');
 
 const config = require('./config/environment');
 const morgan = require('./config/morgan');
@@ -11,7 +12,7 @@ const ApiError = require('./utils/ApiError');
 
 const { errorConverter, errorHandler } = require('./middlewares/error.js');
 const routes = require('./routes');
-const imageRoutes = require('./routes/images.route');
+// const imageRoutes = require('./routes/images.route');
 
 const app = express();
 
@@ -32,9 +33,14 @@ app.use(
 app.use(cors());
 app.options('*', cors());
 
+// Serve the 'uploads' folder statically
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+
 // Define routes
 app.use('/api', routes);			// business routes
-app.use('/uploads', imageRoutes);	// images route
+
+/**no need if hosting folder statically */
+// app.use('/uploads', imageRoutes);	// images route
 
 // Send back a 404 error for any unknown api request
 app.use((_req, _res, next) => {

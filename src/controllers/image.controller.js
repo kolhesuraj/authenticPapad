@@ -1,11 +1,7 @@
-// dependencies
-const httpStatus = require("http-status");
 // utils
 const asyncRequest = require("../utils/requestHandler");
 // services
 const { imageService } = require("../services");
-// util
-const ApiError = require("../utils/ApiError");
 
 
 const getImage = asyncRequest(async (req, res) => {

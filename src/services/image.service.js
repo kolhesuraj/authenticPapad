@@ -9,10 +9,10 @@ const ApiError = require("../utils/ApiError");
  * @param {Object} imageBody - The image to create.
  * @returns {Promise<Image>} - The created image.
  */
-const createImage = (image, HOST) => {
+const createImage = (image) => {
     const imageBody = {
         filename: image.filename,
-        path: `http://${HOST}/${image.path}`
+        path: image.path
     };
     return Image.create(imageBody);
 };
@@ -26,12 +26,12 @@ const saveImages = (images) => {
     return Image.insertMany(images);
 };
 
-const saveMultipleImages = async (images, HOST) => {
+const saveMultipleImages = async (images) => {
     let imageBody = [];
     images.forEach(image => {
         imageBody.push({
             filename: image.filename,
-            path: `http://${HOST}/${image.path}`
+            path: image.path
         });
     });
     const result = await saveImages(imageBody);
@@ -66,6 +66,11 @@ const deleteImageById = async (imageId) => {
 };
 
 
+/**
+ * Reads and returns the contents of an image file.
+ * @param filename - The filename parameter name of the file.
+ * @returns 
+ */
 const readImage = (filename) => {
     const imagePath = path.join(__dirname, "./../../uploads/", filename);
     return fs.readFileSync(imagePath);

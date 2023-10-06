@@ -10,8 +10,7 @@ const { itemService, imageService } = require("../services");
 
 // Create a new item
 const createItem = asyncRequest(async (req, res) => {
-    const HOST = req.get('host');
-    req.body.images = await imageService.saveMultipleImages(req.files, HOST);
+    req.body.images = await imageService.saveMultipleImages(req.files);
     req.body.createdBy = req.user._id;
     const item = await itemService.createItem(req.body);
     res.status(httpStatus.CREATED).send(item);

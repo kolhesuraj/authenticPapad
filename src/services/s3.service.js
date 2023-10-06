@@ -1,4 +1,12 @@
-const { S3Client, PutObjectCommand, DeleteObjectCommand, PutBucketPolicyCommand } = require("@aws-sdk/client-s3");
+// dependencies
+const {
+    S3Client,
+    PutObjectCommand,
+    DeleteObjectCommand,
+    PutBucketPolicyCommand
+} = require("@aws-sdk/client-s3");
+
+// configs
 const config = require("../config/environment");
 
 
@@ -20,7 +28,7 @@ const s3Client = new S3Client({
  */
 const uploadFileToS3 = async (file, destinationFolder) => {
     try {
-        const filePath = `${destinationFolder}/${file.originalname}`;
+        const s3Key = `${destinationFolder}/${file.originalname}`;
         const s3BucketName = config.aws.s3BucketName;
         const awsRegion = config.aws.awsRegion;
 
@@ -28,7 +36,7 @@ const uploadFileToS3 = async (file, destinationFolder) => {
         const params = {
             Bucket: s3BucketName,
             Body: file,
-            Key: filePath,
+            Key: s3Key,
             ContentType: file.mimetype,
             ACL: "public-read", // Set the ACL to public-read to grant public access
         };
@@ -90,7 +98,7 @@ const makeFilePublicAccess = (filePath) => {
 
 /**
  * Delete a file from an AWS S3 bucket.
- * @param {String} s3Key - The  file that you want to upload 
+ * @param {String} s3Key - The  file that you want to delete. It like folder/fileName in the bucket
  * @returns {Object<DeleteObjectCommand>}
  */
 const deleteS3File = async (s3Key) => {

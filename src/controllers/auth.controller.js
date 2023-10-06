@@ -2,10 +2,9 @@
 const httpStatus = require("http-status");
 // utils
 const asyncRequest = require("../utils/requestHandler");
+const ApiError = require("../utils/ApiError");
 // services
 const { authService, tokenService } = require("../services");
-// util
-const ApiError = require("../utils/ApiError");
 
 
 const registerUser = asyncRequest(async (req, res) => {
