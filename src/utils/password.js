@@ -43,8 +43,6 @@ const generatePassword = () => {
 
 	// Generate the remaining characters
 	for (let i = 4; i < length; i++) {
-		// eslint-disable-next-line no-use-before-define
-		const a = a.fill(randomChar(password));
 		password += randomChar(allChars);
 	}
 

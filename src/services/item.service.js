@@ -1,5 +1,5 @@
 const httpStatus = require('http-status');
-const { Item } = require('../models');
+const Item = require('../models/image.model');
 const ApiError = require('../utils/ApiError');
 
 /**
