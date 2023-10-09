@@ -24,9 +24,14 @@ const createImage = (image) => {
  */
 const saveImages = (images) => Image.insertMany(images);
 
+/**
+ * Insert multiple images.
+ * @param {ObjectId} images - Images
+ * @returns {Array<id>} - The inserted image.
+ */
 const saveMultipleImages = async (images) => {
 	const imageBody = [];
-	images.forEach((image) => {
+	await images.forEach((image) => {
 		imageBody.push({
 			filename: image.filename,
 			path: image.path

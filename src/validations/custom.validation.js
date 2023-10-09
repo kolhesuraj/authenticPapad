@@ -19,10 +19,10 @@ const mongoID = (value, helpers) => {
  * @returns The code is returning a message indicating the requirements for a valid password.
  */
 const password = (value, helpers) => {
-	if (value.length() < 6) {
+	if (value.length < 6) {
 		return helpers.message('{{#label}} must have length 6 characters');
 	}
-	if (!value.match('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=. {6,16})')) {
+	if (!value.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{6,16}$/)) {
 		return helpers.message('{{#label}} must contains 1 Uppercase, 1 lowercase, 1 Special character, 1 number');
 	}
 	return value;

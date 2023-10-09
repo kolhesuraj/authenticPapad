@@ -13,7 +13,8 @@ router.post('/register/admin', validate(authValidation.registerUser), authContro
 // Router: Login admin, user
 router.post('/login', validate(authValidation.login), authController.login);
 router.post('/login/admin', validate(authValidation.login), authController.AdminLogin);
-router.post('/social/login/:provider', validate(authValidation.socialLogin), authController.socialLogin);
+router.post('/social/login/:provider/admin', validate(authValidation.socialLogin), authController.socialAdminLogin);
+router.post('/social/login/:provider', validate(authValidation.socialLogin), authController.socialUserLogin);
 
 
 module.exports = router;

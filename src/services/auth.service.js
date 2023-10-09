@@ -103,6 +103,13 @@ const loginWithFacebook = async (idToken) => {
 	return user;
 };
 
+/**
+ * The function `socialLogin` allows users to log in using either Google or Facebook and returns the
+ * user information.
+ * @param {string} provider - The social media platform used for login. It can be either "google" or "facebook".
+ * @param {string} idToken - The `idToken` parameter is a token.
+ * @returns The function `socialLogin` returns the `user` object.
+ */
 const socialLogin = async (provider, idToken) => {
 	let user;
 	switch (provider) {
@@ -117,6 +124,8 @@ const socialLogin = async (provider, idToken) => {
 	}
 	return user;
 };
+
+
 
 module.exports = {
 	registerUser,
