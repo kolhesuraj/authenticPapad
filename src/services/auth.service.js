@@ -103,11 +103,25 @@ const loginWithFacebook = async (idToken) => {
 	return user;
 };
 
+const socialLogin = async (provider, idToken) => {
+	let user;
+	switch (provider) {
+		case 'google':
+			user = await loginWithGoogle(idToken);
+			break;
+		case 'facebook':
+			user = await loginWithFacebook(idToken);
+			break;
+		default:
+			throw new ApiError(httpStatus.NOT_FOUND, ` ${provider} Provider Not Found`);
+	}
+	return user;
+};
+
 module.exports = {
 	registerUser,
 	registerUserWithGoogle,
 	registerUserWithFacebook,
 	loginUserWithEmailAndPassword,
-	loginWithGoogle,
-	loginWithFacebook
+	socialLogin
 };

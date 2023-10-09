@@ -24,4 +24,22 @@ const auth = async (req, _res, next) => {
 	}
 };
 
-module.exports = { auth };
+// check for admin role
+const adminAuth = (req, _res, next) => {
+	try {
+		// get user role from req.user
+		const userRole = req.user.role;
+
+		// check user role
+		if (userRole !== 'admin') {
+			next(new ApiError(httpStatus.UNAUTHORIZED, 'You are not admin! Please login with admin'));
+		}
+
+		// if user is admin
+		next();
+	} catch (error) {
+		next(new ApiError(httpStatus.INTERNAL_SERVER_ERROR, `Something went's wrong!`));
+	}
+};
+
+module.exports = { auth, adminAuth };

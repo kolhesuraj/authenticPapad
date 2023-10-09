@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const { mongoID } = require('./customValidations/custom.validation');
+const { mongoID } = require('./custom.validation');
 
 const createItem = {
 	body: Joi.object().keys({

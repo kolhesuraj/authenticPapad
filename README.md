@@ -353,3 +353,12 @@ The `paginate` method returns a Promise, which fulfills with an object having th
   "totalResults": 48
 }
 ```
+
+
+## Linting
+
+Linting is done using [ESLint](https://eslint.org/).
+
+To modify the ESLint configuration, update the `.eslintrc.json` file.
+
+To prevent a certain file or directory from being linted, add it to `.eslintignore`.

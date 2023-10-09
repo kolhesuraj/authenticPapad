@@ -30,7 +30,18 @@ const userSchema = mongoose.Schema(
 		password: {
 			type: String,
 			require: true,
+			minlength: 6,
+			validate(value) {
+				if (!value.match(/\d/) || !value.match(/[a-zA-Z]/)) {
+					throw new Error('Password must contain at least one letter and one number');
+				}
+			},
 			private: true
+		},
+		role: {
+			type: String,
+			require: true,
+			enum: ['admin', 'user']
 		}
 	},
 	{ timestamps: true }
