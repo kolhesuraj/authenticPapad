@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { paginate, privates } = require('./plugins');
+const { paginate, privates, softDelete } = require('./plugins');
 
 const itemSchema = mongoose.Schema(
 	{
@@ -34,6 +34,7 @@ const itemSchema = mongoose.Schema(
 // apply plugins on schema
 itemSchema.plugin(paginate);
 itemSchema.plugin(privates);
+itemSchema.plugin(softDelete);
 
 /**
  * @typedef Items

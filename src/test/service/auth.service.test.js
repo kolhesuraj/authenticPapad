@@ -3,8 +3,7 @@ const {
 	registerUserWithGoogle,
 	registerUserWithFacebook,
 	loginUserWithEmailAndPassword,
-	loginWithGoogle,
-	loginWithFacebook
+	socialLogin
 } = require('../../services/auth.service');
 
 const userService = require('../../services/user.service'); // Replace with the actual path to your user service
@@ -160,7 +159,7 @@ describe('User Authentication Module', () => {
 			});
 
 			// Call the loginWithGoogle function
-			const result = await loginWithGoogle('googleIdToken');
+			const result = await socialLogin('google', 'googleIdToken');
 
 			// Assertions
 			expect(result.name).toBe('Google User');
@@ -176,7 +175,7 @@ describe('User Authentication Module', () => {
 			});
 
 			// Call the loginWithGoogle function with an unverified Google account
-			await expect(loginWithGoogle('googleIdToken')).rejects.toThrowError('Google authentication failed');
+			await expect(socialLogin('google', 'googleIdToken')).rejects.toThrowError('Google authentication failed');
 		});
 
 		it('should throw an error for a non-existing user', async () => {
@@ -191,7 +190,7 @@ describe('User Authentication Module', () => {
 			userService.getUserByEmail.mockResolvedValueOnce(null);
 
 			// Call the loginWithGoogle function with a non-existing user
-			await expect(loginWithGoogle('googleIdToken')).rejects.toThrowError('This user does not exist');
+			await expect(socialLogin('google', 'googleIdToken')).rejects.toThrowError('This user does not exist');
 		});
 	});
 
@@ -210,7 +209,7 @@ describe('User Authentication Module', () => {
 			});
 
 			// Call the loginWithFacebook function
-			const result = await loginWithFacebook('facebookIdToken');
+			const result = await socialLogin('facebook', 'facebookIdToken');
 
 			// Assertions
 			expect(result.name).toBe('Facebook User');
@@ -228,7 +227,7 @@ describe('User Authentication Module', () => {
 			userService.getUserByEmail.mockResolvedValueOnce(null);
 
 			// Call the loginWithFacebook function with a non-existing user
-			await expect(loginWithFacebook('facebookIdToken')).rejects.toThrowError('Incorrect email or password');
+			await expect(socialLogin('facebook', 'facebookIdToken')).rejects.toThrowError('Incorrect email or password');
 		});
 	});
 });
