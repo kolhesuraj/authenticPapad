@@ -106,18 +106,16 @@ describe('Item Service', () => {
 
 	describe('deleteItemById', () => {
 		// it('should soft delete an item by ID', async () => {
-		// 	const itemId = '123';
-
 		// 	// Create a spy for the 'findById' method
 		// 	const findByIdSpy = jest.spyOn(Item, 'findById');
 
 		// 	// Mock the 'findById' method to return a mock item
-		// 	findByIdSpy.mockResolvedValue({ _id: itemId, deleted: false });
+		// 	findByIdSpy.mockResolvedValue({ _id: ItemIdFixture, deleted: false });
 
-		// 	const result = await deleteItemById(itemId);
+		// 	const result = await deleteItemById(ItemIdFixture);
 
-		// 	expect(findByIdSpy).toHaveBeenCalledWith(itemId);
-		// 	expect(result.deleted).toBe(true); // Check that the 'deleted' flag is set
+		// 	expect(findByIdSpy).toHaveBeenCalledWith(ItemIdFixture);
+		// 	expect(result.deleted).toBe(true);
 
 		// 	// Restore the spy
 		// 	findByIdSpy.mockRestore();
