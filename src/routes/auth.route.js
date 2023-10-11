@@ -6,8 +6,8 @@ const authController = require('../controllers/auth.controller');
 const router = express.Router();
 
 // Routes: register user
-router.post('/register', validate(authValidation.registerUser), authController.registerUser);
-router.post('/register/:provider', validate(authValidation.socialLogin), authController.socialRegistration);
+router.post('/register/user', validate(authValidation.registerUser), authController.registerUser);
+router.post('/register/user/:provider', validate(authValidation.socialLogin), authController.socialRegistration);
 // Routes: register admin
 router.post('/register/admin', validate(authValidation.registerUser), authController.registerAdmin);
 // Router: Login admin, user

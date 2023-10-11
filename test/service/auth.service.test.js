@@ -4,20 +4,20 @@ const {
 	registerUserWithFacebook,
 	loginUserWithEmailAndPassword,
 	socialLogin
-} = require('../../services/auth.service');
+} = require('../../src/services/auth.service');
 
-const userService = require('../../services/user.service'); // Replace with the actual path to your user service
-const socialAuthService = require('../../services/social.auth.service'); // Replace with the actual path to your social auth service
+const userService = require('../../src/services/user.service'); // Replace with the actual path to your user service
+const socialAuthService = require('../../src/services/social.auth.service'); // Replace with the actual path to your social auth service
 
 // Mock the userService.createUser function
-jest.mock('../../services/user.service', () => ({
+jest.mock('../../src/services/user.service', () => ({
 	createUser: jest.fn(),
 	getUserByMobile: jest.fn(),
 	getUserByEmail: jest.fn()
 }));
 
 // Mock the socialAuthService.verifyGoogleUser and socialAuthService.verifyFacebookUser functions
-jest.mock('../../services/social.auth.service', () => ({
+jest.mock('../../src/services/social.auth.service', () => ({
 	verifyGoogleUser: jest.fn(),
 	verifyFacebookUser: jest.fn()
 }));
