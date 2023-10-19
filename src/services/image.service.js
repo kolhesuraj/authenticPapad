@@ -1,8 +1,8 @@
-const fs = require('fs');
-const path = require('path');
-const httpStatus = require('http-status');
-const { Image } = require('../models');
-const ApiError = require('../utils/ApiError');
+const fs = require("fs");
+const path = require("path");
+const httpStatus = require("http-status");
+const { Image } = require("../models");
+const ApiError = require("../utils/ApiError");
 
 /**
  * Create a new image.
@@ -61,7 +61,7 @@ const getImageById = (id) => Image.findById(id);
 const deleteImageById = async (imageId) => {
 	const image = await getImageById(imageId);
 	if (!image) {
-		throw new ApiError(httpStatus.BAD_REQUEST, 'image not found');
+		throw new ApiError(httpStatus.BAD_REQUEST, "image not found");
 	}
 	await image.delete();
 	return image;
@@ -73,7 +73,7 @@ const deleteImageById = async (imageId) => {
  * @returns
  */
 const readImage = (filename) => {
-	const imagePath = path.join(__dirname, './../../uploads/', filename);
+	const imagePath = path.join(__dirname, "./../../uploads/", filename);
 	// eslint-disable-next-line security/detect-non-literal-fs-filename
 	return fs.readFileSync(imagePath);
 };

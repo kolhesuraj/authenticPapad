@@ -1,22 +1,22 @@
-const express = require('express');
-const helmet = require('helmet');
-const compression = require('compression');
-const cors = require('cors');
-const httpStatus = require('http-status');
-const path = require('path');
+const express = require("express");
+const helmet = require("helmet");
+const compression = require("compression");
+const cors = require("cors");
+const httpStatus = require("http-status");
+const path = require("path");
 
-const config = require('./config/environment');
-const morgan = require('./config/morgan');
+const config = require("./config/environment");
+const morgan = require("./config/morgan");
 
-const ApiError = require('./utils/ApiError');
+const ApiError = require("./utils/ApiError");
 
-const { errorConverter, errorHandler } = require('./middlewares/error');
-const routes = require('./routes');
+const { errorConverter, errorHandler } = require("./middlewares/error");
+const routes = require("./routes");
 // const imageRoutes = require('./routes/images.route');
 
 const app = express();
 
-if (config.env !== 'test') {
+if (config.env !== "test") {
 	app.use(morgan.successHandler);
 	app.use(morgan.errorHandler);
 }
@@ -30,20 +30,20 @@ app.use(
 
 // Enable cors to accept requests from any frontend domain, all possible HTTP methods, and necessary items in request headers
 app.use(cors());
-app.options('*', cors());
+app.options("*", cors());
 
 // Serve the 'uploads' folder statically
-app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
 // Define routes
-app.use('/api', routes); // business routes
+app.use("/api", routes); // business routes
 
 /** no need if hosting folder statically */
 // app.use('/uploads', imageRoutes);	// images route
 
 // Send back a 404 error for any unknown api request
 app.use((_req, _res, next) => {
-	next(new ApiError(httpStatus.NOT_FOUND, 'Not found'));
+	next(new ApiError(httpStatus.NOT_FOUND, "Not found"));
 });
 
 // Convert error to ApiError, if request was rejected or it throws an error

@@ -78,7 +78,7 @@
 		],
 		"quotes": [
 			"error",
-			"single",
+			"double",
 			{
 				"allowTemplateLiterals": true
 			}
@@ -124,7 +124,12 @@
 		"import/no-extraneous-dependencies": [
 			"error",
 			{
-				"devDependencies": true,
+				"devDependencies": [
+					"**/tests/**",
+					"**/test/**",
+					"test.js",
+					"tests.js"
+				],
 				"optionalDependencies": false,
 				"peerDependencies": false
 			}

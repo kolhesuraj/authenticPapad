@@ -1,9 +1,9 @@
 // dependencies
-const httpStatus = require('http-status');
+const httpStatus = require("http-status");
 // utils
-const asyncRequest = require('../utils/requestHandler');
+const asyncRequest = require("../utils/requestHandler");
 // services
-const { userService } = require('../services');
+const { userService } = require("../services");
 
 const getUser = asyncRequest((req, res) => {
 	res.status(httpStatus.OK).send(req.user);

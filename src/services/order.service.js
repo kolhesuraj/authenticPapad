@@ -1,4 +1,4 @@
-const { Order } = require('../models');
+const { Order } = require("../models");
 
 /**
  * Creates a new order.

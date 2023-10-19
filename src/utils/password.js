@@ -14,13 +14,13 @@ const randomChar = (characters) => {
  * @returns {String}
  */
 const shuffleString = (string) => {
-	const array = string.split('');
+	const array = string.split("");
 	for (let i = array.length - 1; i > 0; i--) {
 		const j = Math.floor(Math.random() * (i + 1));
 		// eslint-disable-next-line security/detect-object-injection
 		[array[i], array[j]] = [array[j], array[i]];
 	}
-	return array.join('');
+	return array.join("");
 };
 
 /**
@@ -29,14 +29,14 @@ const shuffleString = (string) => {
  */
 const generatePassword = () => {
 	const length = Math.floor(Math.random() * 11) + 6;
-	const lowercaseChars = 'abcdefghijklmnopqrstuvwxyz';
-	const uppercaseChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-	const numericChars = '0123456789';
-	const specialChars = '!@#$%^&*?';
+	const lowercaseChars = "abcdefghijklmnopqrstuvwxyz";
+	const uppercaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	const numericChars = "0123456789";
+	const specialChars = "!@#$%^&*?";
 
 	const allChars = lowercaseChars + uppercaseChars + numericChars + specialChars;
 
-	let password = '';
+	let password = "";
 
 	// Ensure at least one character from each category
 	password += randomChar(lowercaseChars) + randomChar(uppercaseChars) + randomChar(numericChars) + randomChar(specialChars);

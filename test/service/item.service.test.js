@@ -4,12 +4,12 @@ const {
 	getItemById,
 	updateItemById,
 	deleteItemById
-} = require('../../src/services/item.service');
-const { Item } = require('../../src/models');
-const ApiError = require('../../src/utils/ApiError');
+} = require("../../src/services/item.service");
+const { Item } = require("../../src/models");
+const ApiError = require("../../src/utils/ApiError");
 
 // Import the fixtures
-const itemFixture = require('../fixtures/item.service.fixture');
+const itemFixture = require("../fixtures/item.service.fixture");
 
 const {
 	ItemFixture,
@@ -18,13 +18,13 @@ const {
 } = itemFixture;
 
 // Mock the Item model
-jest.mock('../../src/models/item.model');
+jest.mock("../../src/models/item.model");
 
-describe('Item Service', () => {
-	describe('createItem', () => {
-		it('should create a new item', async () => {
+describe("Item Service", () => {
+	describe("createItem", () => {
+		it("should create a new item", async () => {
 			// Mock the static method 'create' of Image model
-			const createSpy = jest.spyOn(Item, 'create');
+			const createSpy = jest.spyOn(Item, "create");
 			Item.create.mockResolvedValue(ItemObjectFixture);
 
 			const result = await createItem(ItemFixture);
@@ -35,12 +35,12 @@ describe('Item Service', () => {
 		});
 	});
 
-	describe('queryItems', () => {
-		it('should query items with filter and options', async () => {
-			const filter = { name: 'Test Item' };
+	describe("queryItems", () => {
+		it("should query items with filter and options", async () => {
+			const filter = { name: "Test Item" };
 			const options = { limit: 10, page: 1 };
 			const mockPaginatedResult = {
-				docs: [{ _id: '123', name: 'Test Item' }],
+				docs: [{ _id: "123", name: "Test Item" }],
 				totalDocs: 1,
 				limit: 10,
 				page: 1
@@ -55,8 +55,8 @@ describe('Item Service', () => {
 		});
 	});
 
-	describe('getItemById', () => {
-		it('should find an item by ID', async () => {
+	describe("getItemById", () => {
+		it("should find an item by ID", async () => {
 			Item.findById.mockResolvedValue(ItemObjectFixture);
 
 			const result = await getItemById(ItemIdFixture);
@@ -65,7 +65,7 @@ describe('Item Service', () => {
 			expect(result).toEqual(ItemObjectFixture);
 		});
 
-		it('should return null if item is not found', async () => {
+		it("should return null if item is not found", async () => {
 			Item.findById.mockResolvedValue(null);
 
 			const result = await getItemById(ItemIdFixture);
@@ -75,15 +75,15 @@ describe('Item Service', () => {
 		});
 	});
 
-	describe('updateItemById', () => {
-		it('should update an item by ID', async () => {
+	describe("updateItemById", () => {
+		it("should update an item by ID", async () => {
 			const mockItemObject = { ...ItemObjectFixture, save: jest.fn() };
 			const mockItem = ItemFixture;
 
 			// Mock the static method 'findById' of Image model
-			const FindByIdSpy = jest.spyOn(Item, 'findById');
+			const FindByIdSpy = jest.spyOn(Item, "findById");
 			FindByIdSpy.mockResolvedValue(mockItemObject);
-			const SaveSpy = jest.spyOn(Item.prototype, 'save');
+			const SaveSpy = jest.spyOn(Item.prototype, "save");
 			SaveSpy.mockResolvedValue(mockItem);
 
 			const result = await updateItemById(ItemIdFixture, ItemFixture);
@@ -97,14 +97,14 @@ describe('Item Service', () => {
 			SaveSpy.mockRestore();
 		});
 
-		it('should throw an error if the item is not found', async () => {
+		it("should throw an error if the item is not found", async () => {
 			Item.findById.mockResolvedValue(null);
 
 			await expect(updateItemById(ItemIdFixture, ItemFixture)).rejects.toThrow(ApiError);
 		});
 	});
 
-	describe('deleteItemById', () => {
+	describe("deleteItemById", () => {
 		// it('should soft delete an item by ID', async () => {
 		// 	// Create a spy for the 'findById' method
 		// 	const findByIdSpy = jest.spyOn(Item, 'findById');
@@ -121,7 +121,7 @@ describe('Item Service', () => {
 		// 	findByIdSpy.mockRestore();
 		// });
 
-		it('should throw an error if the item is not found', async () => {
+		it("should throw an error if the item is not found", async () => {
 			Item.findById.mockResolvedValue(null);
 
 			await expect(deleteItemById(ItemIdFixture)).rejects.toThrow(ApiError);

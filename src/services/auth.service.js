@@ -1,11 +1,11 @@
 // dependencies
-const httpStatus = require('http-status');
+const httpStatus = require("http-status");
 // utils
-const ApiError = require('../utils/ApiError');
-const { generatePassword } = require('../utils/password');
+const ApiError = require("../utils/ApiError");
+const { generatePassword } = require("../utils/password");
 // service
-const userService = require('./user.service');
-const socialAuthService = require('./social.auth.service');
+const userService = require("./user.service");
+const socialAuthService = require("./social.auth.service");
 
 ////////////////
 //  register  //
@@ -66,7 +66,7 @@ const registerUserWithFacebook = async (idToken) => {
 const loginUserWithEmailAndPassword = async (mobile, password) => {
 	const User = await userService.getUserByMobile(mobile);
 	if (!User || !(await User.isPasswordMatch(password))) {
-		throw new ApiError(httpStatus.UNAUTHORIZED, 'Incorrect email or password');
+		throw new ApiError(httpStatus.UNAUTHORIZED, "Incorrect email or password");
 	}
 	return User;
 };
@@ -79,11 +79,11 @@ const loginUserWithEmailAndPassword = async (mobile, password) => {
 const loginWithGoogle = async (idToken) => {
 	const googleUser = await socialAuthService.verifyGoogleUser(idToken);
 	if (!googleUser.email || !googleUser.email_verified) {
-		throw new ApiError(httpStatus.UNAUTHORIZED, 'Google authentication failed');
+		throw new ApiError(httpStatus.UNAUTHORIZED, "Google authentication failed");
 	}
 	const user = await userService.getUserByEmail(googleUser.email);
 	if (!user) {
-		throw new ApiError(httpStatus.UNAUTHORIZED, 'This user does not exist');
+		throw new ApiError(httpStatus.UNAUTHORIZED, "This user does not exist");
 	}
 	return user;
 };
@@ -98,7 +98,7 @@ const loginWithFacebook = async (idToken) => {
 
 	const user = await userService.getUserByEmail(facebookUser.email);
 	if (!user) {
-		throw new ApiError(httpStatus.UNAUTHORIZED, 'Incorrect email or password');
+		throw new ApiError(httpStatus.UNAUTHORIZED, "Incorrect email or password");
 	}
 	return user;
 };
@@ -113,10 +113,10 @@ const loginWithFacebook = async (idToken) => {
 const socialLogin = async (provider, idToken) => {
 	let user;
 	switch (provider) {
-		case 'google':
+		case "google":
 			user = await loginWithGoogle(idToken);
 			break;
-		case 'facebook':
+		case "facebook":
 			user = await loginWithFacebook(idToken);
 			break;
 		default:

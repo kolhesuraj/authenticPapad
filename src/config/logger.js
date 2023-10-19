@@ -1,4 +1,4 @@
-const winston = require('winston');
+const winston = require("winston");
 
 const enumerateErrorFormat = winston.format((info) => {
 	if (info instanceof Error) {
@@ -8,7 +8,7 @@ const enumerateErrorFormat = winston.format((info) => {
 });
 
 const logger = winston.createLogger({
-	level: 'debug',
+	level: "debug",
 	format: winston.format.combine(
 		enumerateErrorFormat(),
 		winston.format.colorize(),
@@ -16,7 +16,7 @@ const logger = winston.createLogger({
 		winston.format.printf(({ level, message }) => `${level}: ${message}`)
 	),
 	transports: [
-		new winston.transports.Console({ stderrLevels: ['error'] })
+		new winston.transports.Console({ stderrLevels: ["error"] })
 	]
 });
 

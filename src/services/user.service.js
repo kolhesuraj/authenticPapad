@@ -1,6 +1,6 @@
-const httpStatus = require('http-status');
-const ApiError = require('../utils/ApiError');
-const { User } = require('../models');
+const httpStatus = require("http-status");
+const ApiError = require("../utils/ApiError");
+const { User } = require("../models");
 
 /**
  * The function `createUser` creates a new user
@@ -17,7 +17,7 @@ const createUser = (userBody) => User.create(userBody);
 const getUserByEmail = (UserEmail) => {
 	const user = User.findOne({ email: UserEmail });
 	if (!user) {
-		throw new ApiError(httpStatus.NOT_FOUND, 'user not found !');
+		throw new ApiError(httpStatus.NOT_FOUND, "user not found !");
 	}
 	return user;
 };
@@ -30,7 +30,7 @@ const getUserByEmail = (UserEmail) => {
 const getUserByMobile = (UserMobile) => {
 	const user = User.findOne({ mobile: UserMobile });
 	if (!user) {
-		throw new ApiError(httpStatus.NOT_FOUND, 'user not found !');
+		throw new ApiError(httpStatus.NOT_FOUND, "user not found !");
 	}
 	return user;
 };
@@ -51,7 +51,7 @@ const getUserByID = (id) => User.findById(id);
 const updateUserById = async (userId, userBody) => {
 	const user = await getUserByID(userId);
 	if (!user) {
-		throw new ApiError(httpStatus.NOT_FOUND, 'user not found');
+		throw new ApiError(httpStatus.NOT_FOUND, "user not found");
 	}
 	Object.assign(user, userBody);
 	await user.save();
@@ -68,10 +68,10 @@ const updateUserById = async (userId, userBody) => {
 const updatePassword = async (userId, body) => {
 	const user = await getUserByID(userId);
 	if (!user) {
-		throw new ApiError(httpStatus.NOT_FOUND, 'user not found');
+		throw new ApiError(httpStatus.NOT_FOUND, "user not found");
 	}
 	if (!user.isPasswordMatch(body.oldPassword)) {
-		throw new ApiError(httpStatus.UNAUTHORIZED, 'Old password not matched');
+		throw new ApiError(httpStatus.UNAUTHORIZED, "Old password not matched");
 	}
 	return updateUserById(userId, { password: body.newPassword });
 };

@@ -1,19 +1,19 @@
 // tests/imageService.test.js
 
 // Mock the 'fs' module
-jest.mock('fs');
-const fs = require('fs');
+jest.mock("fs");
+const fs = require("fs");
 const {
 	createImage,
 	saveMultipleImages,
 	getImageById,
 	deleteImageById,
 	readImage
-} = require('../../src/services/image.service');
-const { Image } = require('../../src/models');
-const ApiError = require('../../src/utils/ApiError');
+} = require("../../src/services/image.service");
+const { Image } = require("../../src/models");
+const ApiError = require("../../src/utils/ApiError");
 // Import the fixtures
-const imageFixtures = require('../fixtures/images.service.fixture');
+const imageFixtures = require("../fixtures/images.service.fixture");
 
 // Destructure the fixtures for easier access
 const {
@@ -27,13 +27,13 @@ const {
 } = imageFixtures;
 
 // Mock the Image model
-jest.mock('../../src/models/image.model');
+jest.mock("../../src/models/image.model");
 
-describe('imageService', () => {
-	describe('createImage', () => {
-		it('should create a new image', async () => {
+describe("imageService", () => {
+	describe("createImage", () => {
+		it("should create a new image", async () => {
 			// Mock the static method 'create' of Image model
-			const createSpy = jest.spyOn(Image, 'create');
+			const createSpy = jest.spyOn(Image, "create");
 			createSpy.mockResolvedValue(imageObjectFixture);
 
 			const result = await createImage(imageFixture);
@@ -43,10 +43,10 @@ describe('imageService', () => {
 		});
 	});
 
-	describe('saveMultipleImages', () => {
-		it('should save multiple images and return inserted IDs', async () => {
+	describe("saveMultipleImages", () => {
+		it("should save multiple images and return inserted IDs", async () => {
 			// Mock the behavior of the `saveImages` function to resolve with mockInsertedIds
-			const saveImagesSpy = jest.spyOn(Image, 'insertMany');
+			const saveImagesSpy = jest.spyOn(Image, "insertMany");
 			saveImagesSpy.mockResolvedValue(insertedImagesFixture);
 
 			// Call the saveMultipleImages function with the mockImages
@@ -60,10 +60,10 @@ describe('imageService', () => {
 		});
 	});
 
-	describe('getImageById', () => {
-		it('should find an image by ID', async () => {
+	describe("getImageById", () => {
+		it("should find an image by ID", async () => {
 			// Mock the static method 'findById' of Image model
-			const findByIdSpy = jest.spyOn(Image, 'findById');
+			const findByIdSpy = jest.spyOn(Image, "findById");
 			findByIdSpy.mockReturnValue(imageObjectFixture);
 
 			const result = await getImageById(imageIdFixture);
@@ -73,7 +73,7 @@ describe('imageService', () => {
 		});
 	});
 
-	describe('deleteImageById', () => {
+	describe("deleteImageById", () => {
 		// it('should delete an image by ID', async () => {
 		// 	// Mock the static method 'findById' of Image model
 		// 	const findByIdSpy = jest.spyOn(Image, 'findById');
@@ -90,19 +90,19 @@ describe('imageService', () => {
 		// 	expect(result).toEqual(imageObjectFixture);
 		// });
 
-		it('should throw an error if the image is not found', async () => {
+		it("should throw an error if the image is not found", async () => {
 			// Mock the static method 'findById' of Image model to return null
-			const findByIdSpy = jest.spyOn(Image, 'findById');
+			const findByIdSpy = jest.spyOn(Image, "findById");
 			findByIdSpy.mockResolvedValue(null);
 
 			await expect(deleteImageById(imageIdFixture)).rejects.toThrow(ApiError);
 		});
 	});
 
-	describe('readImage', () => {
-		it('should read the contents of an image file', () => {
+	describe("readImage", () => {
+		it("should read the contents of an image file", () => {
 			// Mock 'fs.readFileSync' function
-			jest.spyOn(fs, 'readFileSync').mockReturnValue(mockImageContents);
+			jest.spyOn(fs, "readFileSync").mockReturnValue(mockImageContents);
 
 			const result = readImage(imageFixture.filename);
 

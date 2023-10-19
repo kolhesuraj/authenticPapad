@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const imageSchema = mongoose.Schema(
 	{
@@ -17,7 +17,7 @@ const imageSchema = mongoose.Schema(
 /**
  * @typedef Image
  */
-const Image = mongoose.model('images', imageSchema);
+const Image = mongoose.model("images", imageSchema);
 
 
 

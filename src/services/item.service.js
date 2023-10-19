@@ -1,6 +1,6 @@
-const httpStatus = require('http-status');
-const { Item } = require('../models');
-const ApiError = require('../utils/ApiError');
+const httpStatus = require("http-status");
+const { Item } = require("../models");
+const ApiError = require("../utils/ApiError");
 
 /**
  * Create a new item.
@@ -40,7 +40,7 @@ const getItemById = (id) => Item.findById(id);
 const updateItemById = async (itemId, updateBody) => {
 	const item = await getItemById(itemId);
 	if (!item) {
-		throw new ApiError(httpStatus.BAD_REQUEST, 'item not found');
+		throw new ApiError(httpStatus.BAD_REQUEST, "item not found");
 	}
 	Object.assign(item, updateBody);
 	await item.save();
@@ -56,7 +56,7 @@ const updateItemById = async (itemId, updateBody) => {
 const deleteItemById = async (itemId) => {
 	const item = await getItemById(itemId);
 	if (!item) {
-		throw new ApiError(httpStatus.BAD_REQUEST, 'item not found');
+		throw new ApiError(httpStatus.BAD_REQUEST, "item not found");
 	}
 	await item.delete();
 	return item;

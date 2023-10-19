@@ -1,12 +1,12 @@
-const Joi = require('joi');
-const { mongoID } = require('./custom.validation');
+const Joi = require("joi");
+const { mongoID } = require("./custom.validation");
 
 const createItem = {
 	body: Joi.object().keys({
 		name: Joi.string().required(),
 		price: Joi.number().required(),
 		unit: Joi.string().required(),
-		description: Joi.string().allow('')
+		description: Joi.string().allow("")
 	})
 };
 
@@ -14,7 +14,7 @@ const getItem = { params: Joi.object().keys({ itemId: Joi.string().custom(mongoI
 
 const getItems = {
 	query: Joi.object().keys({
-		search: Joi.string().allow(''),
+		search: Joi.string().allow(""),
 		sortBy: Joi.string(),
 		limit: Joi.number().integer(),
 		page: Joi.number().integer()
@@ -29,7 +29,7 @@ const updateItem = {
 			name: Joi.string().required(),
 			price: Joi.number().required(),
 			unit: Joi.string().required(),
-			description: Joi.string().allow('')
+			description: Joi.string().allow("")
 		})
 		.min(1)
 };

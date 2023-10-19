@@ -1,7 +1,6 @@
 // item.fixtures.js
 
-// eslint-disable-next-line import/no-extraneous-dependencies
-const faker = require('faker');
+const faker = require("faker");
 
 const ItemFixture = {
 	name: faker.commerce.productName(),

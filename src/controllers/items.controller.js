@@ -1,11 +1,11 @@
 // dependencies
-const httpStatus = require('http-status');
+const httpStatus = require("http-status");
 // utils
-const pick = require('../utils/pick');
-const ApiError = require('../utils/ApiError');
-const asyncRequest = require('../utils/requestHandler');
+const pick = require("../utils/pick");
+const ApiError = require("../utils/ApiError");
+const asyncRequest = require("../utils/requestHandler");
 // services
-const { itemService, imageService } = require('../services');
+const { itemService, imageService } = require("../services");
 
 // Create a new item
 const createItem = asyncRequest(async (req, res) => {
@@ -17,12 +17,12 @@ const createItem = asyncRequest(async (req, res) => {
 
 // Get items based on filter and options
 const getItems = asyncRequest(async (req, res) => {
-	const filter = pick(req.query, ['name']);
-	const options = pick(req.query, ['sortBy', 'limit', 'page']);
+	const filter = pick(req.query, ["name"]);
+	const options = pick(req.query, ["sortBy", "limit", "page"]);
 	const result = await itemService.queryItems(
 		// eslint-disable-next-line security/detect-non-literal-regexp
-		{ ...filter, $or: [{ name: new RegExp(req.query.search, 'gi') }] },
-		{ ...options, populate: [{ path: 'images', select: '_id filename path' }] }
+		{ ...filter, $or: [{ name: new RegExp(req.query.search, "gi") }] },
+		{ ...options, populate: [{ path: "images", select: "_id filename path" }] }
 	);
 	res.status(httpStatus.OK).send(result);
 });
@@ -31,7 +31,7 @@ const getItems = asyncRequest(async (req, res) => {
 const getItem = asyncRequest(async (req, res) => {
 	const item = await itemService.getItemById(req.params.itemId);
 	if (!item) {
-		throw new ApiError(httpStatus.BAD_REQUEST, 'Item not found');
+		throw new ApiError(httpStatus.BAD_REQUEST, "Item not found");
 	}
 	res.status(httpStatus.OK).send(item);
 });

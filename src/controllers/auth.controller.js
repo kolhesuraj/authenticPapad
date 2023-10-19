@@ -1,19 +1,27 @@
 // dependencies
-const httpStatus = require('http-status');
+const httpStatus = require("http-status");
 // utils
-const asyncRequest = require('../utils/requestHandler');
-const ApiError = require('../utils/ApiError');
+const asyncRequest = require("../utils/requestHandler");
+const ApiError = require("../utils/ApiError");
 // services
-const { authService, tokenService } = require('../services');
+const { authService, tokenService, addressService } = require("../services");
 
 const registerUser = asyncRequest(async (req, res) => {
-	req.body.role = 'user';
-	const user = await authService.registerUser(req.body);
-	res.status(httpStatus.CREATED).send(user);
+	const body = req.body;
+	const userBody = {
+		name: body.name,
+		email: body.email,
+		mobile: body.mobile,
+		password: body.password,
+		role: "user"
+	};
+	const user = await authService.registerUser(userBody);
+	const address = await addressService.createAddress({ ...body.address, user: user._id });
+	res.status(httpStatus.CREATED).send(user, { address });
 });
 
 const registerAdmin = asyncRequest(async (req, res) => {
-	req.body.role = 'admin';
+	req.body.role = "admin";
 	const user = await authService.registerUser(req.body);
 	res.status(httpStatus.CREATED).send(user);
 });
@@ -21,7 +29,7 @@ const registerAdmin = asyncRequest(async (req, res) => {
 const login = asyncRequest(async (req, res) => {
 	const { mobile, password } = req.body;
 	const user = await authService.loginUserWithEmailAndPassword(mobile, password);
-	if (user.role !== 'user') {
+	if (user.role !== "user") {
 		throw new ApiError(httpStatus.UNAUTHORIZED, `You are not user`);
 	}
 	const { token, expires } = await tokenService.generateAuthTokens(user);
@@ -31,7 +39,7 @@ const login = asyncRequest(async (req, res) => {
 const AdminLogin = asyncRequest(async (req, res) => {
 	const { mobile, password } = req.body;
 	const user = await authService.loginUserWithEmailAndPassword(mobile, password);
-	if (user.role !== 'admin') {
+	if (user.role !== "admin") {
 		throw new ApiError(httpStatus.UNAUTHORIZED, `You are not admin`);
 	}
 	const { token, expires } = await tokenService.generateAuthTokens(user);
@@ -42,8 +50,8 @@ const socialUserLogin = asyncRequest(async (req, res) => {
 	const provider = req.params.provider.tolowercase();
 	const idToken = req.body.token;
 	const user = await authService.socialLogin(provider, idToken);
-	if (user.role !== 'user') {
-		throw new ApiError(httpStatus.UNAUTHORIZED, 'Invalid login credential');
+	if (user.role !== "user") {
+		throw new ApiError(httpStatus.UNAUTHORIZED, "Invalid login credential");
 	}
 	const { token, expires } = await tokenService.generateAuthTokens(user);
 	res.status(httpStatus.ACCEPTED).send({ user, token, expires });
@@ -53,8 +61,8 @@ const socialAdminLogin = asyncRequest(async (req, res) => {
 	const provider = req.params.provider.tolowercase();
 	const idToken = req.body.token;
 	const user = await authService.socialLogin(provider, idToken);
-	if (user.role !== 'admin') {
-		throw new ApiError(httpStatus.UNAUTHORIZED, 'Invalid login credential');
+	if (user.role !== "admin") {
+		throw new ApiError(httpStatus.UNAUTHORIZED, "Invalid login credential");
 	}
 	const { token, expires } = await tokenService.generateAuthTokens(user);
 	res.status(httpStatus.ACCEPTED).send({ user, token, expires });
@@ -65,10 +73,10 @@ const socialRegistration = asyncRequest(async (req, res) => {
 	const idToken = req.body.token;
 	let user;
 	switch (provider) {
-		case 'google':
+		case "google":
 			user = await authService.registerUserWithGoogle(idToken);
 			break;
-		case 'facebook':
+		case "facebook":
 			user = await authService.registerUserWithFacebook(idToken);
 			break;
 		default:

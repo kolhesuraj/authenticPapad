@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
-const validator = require('validator');
-const { paginate } = require('./plugins');
+const mongoose = require("mongoose");
+const validator = require("validator");
+const { paginate } = require("./plugins");
 
 const testSchema = mongoose.Schema(
 	{
@@ -15,7 +15,7 @@ const testSchema = mongoose.Schema(
 			lowercase: true,
 			validate(value) {
 				if (!validator.isEmail(value)) {
-					throw new Error('Invalid email');
+					throw new Error("Invalid email");
 				}
 			}
 		},
@@ -52,6 +52,6 @@ testSchema.plugin(paginate);
 /**
  * @typedef Test
  */
-const Test = mongoose.model('test', testSchema);
+const Test = mongoose.model("test", testSchema);
 
 module.exports = Test;

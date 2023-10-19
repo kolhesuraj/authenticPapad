@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const { paginate, privates, softDelete } = require('./plugins');
+const mongoose = require("mongoose");
+const { paginate, privates, softDelete } = require("./plugins");
 
 const itemSchema = mongoose.Schema(
 	{
@@ -20,12 +20,12 @@ const itemSchema = mongoose.Schema(
 		images: [
 			{
 				type: mongoose.Schema.ObjectId,
-				ref: 'images'
+				ref: "images"
 			}
 		],
 		createdBy: {
 			type: mongoose.Schema.ObjectId,
-			ref: 'user'
+			ref: "user"
 		}
 	},
 	{ timestamps: true }
@@ -39,7 +39,7 @@ itemSchema.plugin(softDelete);
 /**
  * @typedef Items
  */
-const Items = mongoose.model('items', itemSchema);
+const Items = mongoose.model("items", itemSchema);
 
 
 

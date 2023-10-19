@@ -4,6 +4,7 @@
         "lcov",
         "linebreak",
         "papad",
+        "parens",
         "pkill",
         "plusplus",
         "prefs",

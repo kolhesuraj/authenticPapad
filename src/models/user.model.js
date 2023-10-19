@@ -1,9 +1,9 @@
 /* eslint-disable func-names */
 /* eslint-disable require-await */
-const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
-const validator = require('validator');
-const { privates } = require('./plugins');
+const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
+const validator = require("validator");
+const { privates } = require("./plugins");
 
 
 const userSchema = mongoose.Schema(
@@ -20,7 +20,7 @@ const userSchema = mongoose.Schema(
 			unique: true,
 			validate(value) {
 				if (!validator.isEmail(value)) {
-					throw new Error('Invalid email');
+					throw new Error("Invalid email");
 				}
 			}
 		},
@@ -34,7 +34,7 @@ const userSchema = mongoose.Schema(
 			minlength: 6,
 			validate(value) {
 				if (!value.match(/\d/) || !value.match(/[a-zA-Z]/)) {
-					throw new Error('Password must contain at least one letter and one number');
+					throw new Error("Password must contain at least one letter and one number");
 				}
 			},
 			private: true
@@ -42,7 +42,7 @@ const userSchema = mongoose.Schema(
 		role: {
 			type: String,
 			require: true,
-			enum: ['admin', 'user']
+			enum: ["admin", "user"]
 		}
 	},
 	{ timestamps: true }
@@ -59,9 +59,9 @@ userSchema.methods.isPasswordMatch = async function (password) {
 	return bcrypt.compare(password, user.password);
 };
 
-userSchema.pre('save', async function (next) {
+userSchema.pre("save", async function (next) {
 	const user = this;
-	if (user.isModified('password')) {
+	if (user.isModified("password")) {
 		user.password = await bcrypt.hash(user.password, 8);
 	}
 	next();
@@ -73,6 +73,6 @@ userSchema.plugin(privates);
 /**
  * @typedef User
  */
-const User = mongoose.model('user', userSchema);
+const User = mongoose.model("user", userSchema);
 
 module.exports = User;

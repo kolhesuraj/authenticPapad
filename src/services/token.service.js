@@ -1,6 +1,6 @@
-const jwt = require('jsonwebtoken');
-const moment = require('moment');
-const config = require('../config/environment');
+const jwt = require("jsonwebtoken");
+const moment = require("moment");
+const config = require("../config/environment");
 
 /**
  * Generate token
@@ -33,7 +33,7 @@ const verifyToken = (token, secret = config.jwt.secret) => jwt.verify(token, sec
  * @returns {Promise<Object>}
  */
 const generateAuthTokens = (user) => {
-	const accessTokenExpires = moment().add(config.jwt.accessExpirationMinutes, 'minutes');
+	const accessTokenExpires = moment().add(config.jwt.accessExpirationMinutes, "minutes");
 	const accessToken = generateToken(user.id, accessTokenExpires);
 
 	return {

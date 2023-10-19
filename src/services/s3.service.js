@@ -1,8 +1,8 @@
 // dependencies
-const { S3Client, PutObjectCommand, DeleteObjectCommand, PutBucketPolicyCommand } = require('@aws-sdk/client-s3');
+const { S3Client, PutObjectCommand, DeleteObjectCommand, PutBucketPolicyCommand } = require("@aws-sdk/client-s3");
 
 // configs
-const config = require('../config/environment');
+const config = require("../config/environment");
 
 // Create an S3 client with the provided credentials
 const s3Client = new S3Client({
@@ -25,13 +25,13 @@ const makeFilePublicAccess = (filePath) => {
 
 		// create a bucket policy to make the object public
 		const bucketPolicy = {
-			Version: '2021-06-01',
+			Version: "2021-06-01",
 			Statement: [
 				{
-					Sid: 'AllowPublicRead',
-					Effect: 'Allow',
-					Principal: '*',
-					Action: 's3:GetObject',
+					Sid: "AllowPublicRead",
+					Effect: "Allow",
+					Principal: "*",
+					Action: "s3:GetObject",
 					Resource: `arn:aws:s3:::${s3BucketName}/${filePath}` // Specify the object's ARN
 				}
 			]
@@ -71,7 +71,7 @@ const uploadFileToS3 = async (file, destinationFolder) => {
 			Body: file,
 			Key: s3Key,
 			ContentType: file.mimetype,
-			ACL: 'public-read' // Set the ACL to public-read to grant public access
+			ACL: "public-read" // Set the ACL to public-read to grant public access
 		};
 
 		// create PutObjectCommand object

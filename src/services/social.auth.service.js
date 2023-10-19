@@ -1,11 +1,11 @@
 // dependencies
-const { OAuth2Client } = require('google-auth-library');
-const httpStatus = require('http-status');
-const axios = require('axios');
+const { OAuth2Client } = require("google-auth-library");
+const httpStatus = require("http-status");
+const axios = require("axios");
 // environment
-const config = require('../config/environment');
+const config = require("../config/environment");
 // util
-const ApiError = require('../utils/ApiError');
+const ApiError = require("../utils/ApiError");
 
 /**
  * verify google user using token.
@@ -32,7 +32,7 @@ const verifyFacebookUser = async (idToken) => {
 	try {
 		facebook = await axios.get(`https://graph.facebook.com/me?access_token=${idToken}&fields=id,name,email`);
 		if (!facebook.data) {
-			throw new Error('Invalid facebook session');
+			throw new Error("Invalid facebook session");
 		}
 	} catch (error) {
 		throw new ApiError(
@@ -41,7 +41,7 @@ const verifyFacebookUser = async (idToken) => {
 				try {
 					return error.response.data.error.message;
 				} catch (e) {
-					return 'Something went wrong';
+					return "Something went wrong";
 				}
 			})()
 		);
