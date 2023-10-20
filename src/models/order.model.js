@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { paginate } = require("./plugins");
+const { paginate, softDelete, privates } = require("./plugins");
 
 const statusType = {
 	placed: "placed",
@@ -46,6 +46,8 @@ const orderSchema = mongoose.Schema(
 
 // apply plugins on schema
 orderSchema.plugin(paginate);
+orderSchema.plugin(privates);
+orderSchema.plugin(softDelete);
 
 /**
  * @typedef Order

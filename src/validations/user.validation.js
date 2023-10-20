@@ -1,5 +1,5 @@
 const Joi = require("joi");
-const { password } = require("./custom.validation");
+const { password, mongoID } = require("./custom.validation");
 
 const updateUser = {
 	body: Joi.object().keys({
@@ -17,5 +17,24 @@ const updatePassword = {
 };
 
 
+const createAddress = {
+	params: Joi.object().keys({ userId: Joi.required().custom(mongoID) }),
+	body: Joi.object().keys({
+		line1: Joi.string().required(),
+		line2: Joi.string().allow(""),
+		city: Joi.string().required(),
+		state: Joi.string().required(),
+		pinCode: Joi.number().required()
+	})
+};
 
-module.exports = { updateUser, updatePassword };
+const deleteAddress = {
+	params: Joi.object().keys({
+		userId: Joi.required().custom(mongoID),
+		addressId: Joi.required().custom(mongoID)
+	})
+};
+
+
+
+module.exports = { updateUser, updatePassword, createAddress, deleteAddress };

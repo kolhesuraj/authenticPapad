@@ -3,7 +3,7 @@ const httpStatus = require("http-status");
 // utils
 const asyncRequest = require("../utils/requestHandler");
 // services
-const { userService } = require("../services");
+const { userService, addressService } = require("../services");
 
 const getUser = asyncRequest((req, res) => {
 	res.status(httpStatus.OK).send(req.user);
@@ -19,4 +19,21 @@ const updatePassword = asyncRequest(async (req, res) => {
 	res.status(httpStatus.ACCEPTED).send(user);
 });
 
-module.exports = { updateUser, getUser, updatePassword };
+const getAddress = asyncRequest(async (req, res) => {
+	const address = await addressService.getAddressByUserId(req.user.userId);
+	res.status(httpStatus.ACCEPTED).send(address);
+});
+
+const addAddress = asyncRequest(async (req, res) => {
+	await addressService.createAddress({ user: req.user.userId, ...req.body });
+	res.status(httpStatus.ACCEPTED).send();
+});
+
+const deleteAddress = asyncRequest(async (req, res) => {
+	await addressService.deleteAddress(req.params.addressId);
+	res.status(httpStatus.NO_CONTENT).send();
+});
+
+
+
+module.exports = { updateUser, getUser, updatePassword, getAddress, addAddress, deleteAddress };

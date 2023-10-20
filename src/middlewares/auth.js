@@ -19,6 +19,12 @@ const auth = (role) => async (req, _res, next) => {
 		// get user
 		const user = await userService.getUserByID(payload.sub);
 
+		// if user deleted or not found
+		if (!user) {
+			next(new ApiError(httpStatus.FORBIDDEN, "Forbidden"));
+		}
+
+		// check role for route access
 		if (role && role !== user.role) {
 			next(new ApiError(httpStatus.FORBIDDEN, "Forbidden"));
 		}
@@ -33,4 +39,4 @@ const auth = (role) => async (req, _res, next) => {
 
 
 
-module.exports = { auth };
+module.exports = auth;

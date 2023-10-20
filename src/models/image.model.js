@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { privates } = require("./plugins");
 
 const imageSchema = mongoose.Schema(
 	{
@@ -13,6 +14,9 @@ const imageSchema = mongoose.Schema(
 	},
 	{ timestamps: true }
 );
+
+// plugins
+imageSchema.plugin(privates);
 
 /**
  * @typedef Image

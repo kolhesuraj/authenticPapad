@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { privates } = require("./plugins");
+const { privates, softDelete } = require("./plugins");
 
 const addressSchema = mongoose.Schema(
 	{
@@ -30,6 +30,7 @@ const addressSchema = mongoose.Schema(
 
 // apply plugins on schema
 addressSchema.plugin(privates);
+addressSchema.plugin(softDelete);
 
 /**
  * @typedef Test

@@ -15,13 +15,13 @@ const router = express.Router();
 router
 	.route("/")
 	.get(validate(itemValidation.getItems), itemController.getItems)
-	.post(auth.auth("admin"), multerInstance.array("images", 10), itemController.createItem);
+	.post(auth("admin"), multerInstance.array("images", 10), itemController.createItem);
 
 // Routes: get one Item, update Item, delete Item
 router
 	.route("/:itemId")
 	.get(validate(itemValidation.getItem), itemController.getItem)
-	.patch(auth.auth("admin"), validate(itemValidation.updateItem), itemController.updateItem)
-	.delete(auth.auth("admin"), validate(itemValidation.deleteItem), itemController.deleteItem);
+	.patch(auth("admin"), validate(itemValidation.updateItem), itemController.updateItem)
+	.delete(auth("admin"), validate(itemValidation.deleteItem), itemController.deleteItem);
 
 module.exports = router;

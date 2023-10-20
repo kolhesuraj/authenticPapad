@@ -3,7 +3,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const validator = require("validator");
-const { privates } = require("./plugins");
+const { privates, softDelete } = require("./plugins");
 
 
 const userSchema = mongoose.Schema(
@@ -69,6 +69,7 @@ userSchema.pre("save", async function (next) {
 
 // apply plugins for schema
 userSchema.plugin(privates);
+userSchema.plugin(softDelete);
 
 /**
  * @typedef User
