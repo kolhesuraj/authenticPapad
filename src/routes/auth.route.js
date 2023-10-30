@@ -1,6 +1,10 @@
+// dependencies
 const express = require("express");
+// middleware
 const validate = require("../middlewares/validate");
+// validator
 const authValidation = require("../validations/auth.validation");
+// controller
 const authController = require("../controllers/auth.controller");
 
 const router = express.Router();
