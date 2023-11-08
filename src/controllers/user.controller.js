@@ -6,7 +6,7 @@ const asyncRequest = require("../utils/requestHandler");
 const { userService, addressService } = require("../services");
 
 const getUser = asyncRequest((req, res) => {
-	res.status(httpStatus.OK).send(req.user);
+	res.status(httpStatus.OK).send({ user: req.user });
 });
 
 const updateUser = asyncRequest(async (req, res) => {

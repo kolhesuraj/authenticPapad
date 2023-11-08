@@ -11,7 +11,7 @@ const userValidation = require("../validations/user.validation");
 const router = express.Router();
 
 // Token authentication for all routes defined in this file
-router.use(auth);
+router.use(auth());
 
 // Routes: get one user, update user
 router
