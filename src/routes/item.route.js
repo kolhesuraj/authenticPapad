@@ -15,7 +15,7 @@ const router = express.Router();
 router
 	.route("/")
 	.get(validate(itemValidation.getItems), itemController.getItems)
-	.post(auth("admin"), multerInstance.array("images", 10), itemController.createItem);
+	.post(auth("admin"), multerInstance.array("images", 10), validate(itemValidation.createItem), itemController.createItem);
 
 // Routes: get one Item, update Item, delete Item
 router

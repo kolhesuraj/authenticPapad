@@ -31,7 +31,6 @@ const updateItem = {
 			unit: Joi.string().required(),
 			description: Joi.string().allow("")
 		})
-		.min(1)
 };
 
 const deleteItem = { params: Joi.object().keys({ itemId: Joi.string().custom(mongoID) }) };
