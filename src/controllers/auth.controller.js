@@ -17,7 +17,7 @@ const registerUser = asyncRequest(async (req, res) => {
 	};
 	const user = await authService.registerUser(userBody);
 	const address = await addressService.createAddress({ ...body.address, user: user._id });
-	res.status(httpStatus.CREATED).send(user, { address });
+	res.status(httpStatus.CREATED).send({ user, address });
 });
 
 const registerAdmin = asyncRequest(async (req, res) => {
